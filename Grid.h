@@ -6,7 +6,7 @@ class Grid
 {
     public:
         Grid();
-        Grid(const Grid &g2);
+        //Grid(const Grid &g2);
         Grid(int x, int y, double density);
         Grid(string file);
         ~Grid();
@@ -18,9 +18,9 @@ class Grid
         int getSize();
         int getNumRows();
         int getNumCol();
-        string print(Grid x);
+        void printg(Grid x);
 
-        char *myGrid;
+        char **myGrid;
 
     private:
         int size; //number of cells in grid

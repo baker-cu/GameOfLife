@@ -1,19 +1,23 @@
-#include <home/cpsc350/GameOfLife/Grid.h>
 #include <iostream>
+#include <Grid.h>
 #include <cmath>
 #include <fstream>
+#include <cstdlib>
+
+//compile with g++ -I /home/cpsc350/GameOfLife Grid.cpp
 
 using namespace std;
 
 Grid::Grid()
 {
+    char(*myGrid)[10];
     myGrid = new char[10][10];
     row = 10;
     column = 10;
     size = 100;
 }
 
-Grid::Grid(const Grid &g2)//copy constructor
+/*Grid::Grid(const Grid &g2)//copy constructor
 {
     size = g2.size;
     row = g2.row;
@@ -27,26 +31,25 @@ Grid::Grid(const Grid &g2)//copy constructor
             myGrid[i1][i2] = g2[i1][i2];
         }
     }
-}
+}*/
 
 Grid::Grid(int x, int y, double density)
 {
-    //make sure when you square root the size you get an interger
-    myGrid = new char[x][y];
+    char* myGrid = new char[x*y];
     row = x;
     column = y;
     size = x*y;
     num_living = size * density;
-    string str = ""
+    string str = "";
 
     for(int a = 0; a < num_living; a++)//adds the density of X's to a string
     {
-        str += "X";
+        str += 'X';
     }
 
     for(int a = 0; a < size - num_living; a++)//adds the rest to the string
     {
-        str += "-";
+        str += '-';
     }
 
     for(int i1 = 0; i1 < column; i1++)
@@ -54,9 +57,9 @@ Grid::Grid(int x, int y, double density)
         for(int i2 = 0; i2 < row; i2++)
         {
             //generate random numbers from index 0 to length of string - 1
-            int rand = (rand()%str.length()-1)+1;
-            myGrid[i1][i2] = str[rand];
-            str.erase(rand);
+            int randnum = (rand()%(str.length()-1))+1;
+            myGrid[i1][i2] = str[randnum];
+            str.erase(randnum);
         }
     }
 
@@ -64,25 +67,27 @@ Grid::Grid(int x, int y, double density)
 
 Grid::Grid(string file)
 {
+    string line = "";
+    string col, r;
     //code to create a grid from a filepath
     ifstream openfile(file);
 
     getline(openfile, col);
-    int column = col;
+    int column = stoi(col);
     getline(openfile, r);
-    int row = r;
+    int row = stoi(r);
 
     size = row*column;
 
-    myGrid = new char[row][column];
+    char* myGrid = new char[row*column];
 
-    x = 0;
-    while(getline(openfile, init_line))
+    int x = 0;
+    while(getline(openfile, line))
     {
         for(int y = 0; y < row; y++)
         {
-            myGrid[x][y] = init_line[x];
-            if(init_line == "X")
+            myGrid[x][y] = line[x];
+            if(line == "X")
             {
                 num_living += 1;
             }
@@ -92,50 +97,50 @@ Grid::Grid(string file)
     openfile.close();
 }
 
-Grid::kill(int x, int y)
+void Grid::kill(int x, int y)
 {
     myGrid[x][y] = '-';
     num_living--;
 }
 
-Grid::grow(int x, int y)
+void Grid::grow(int x, int y)
 {
     myGrid[x][y] = 'X';
     num_living++;
 }
 
-Grid::check(int x, int y)
+bool Grid::check(int x, int y)
 {
     return (myGrid[x][y] == 'X');
 }
 
-Grid::isEmpty()
+bool Grid::isEmpty()
 {
     return (num_living == 0);
 }
 
-Grid::getSize()
+int Grid::getSize()
 {
     return(size);
 }
 
-Grid::getNumRows()
+int Grid::getNumRows()
 {
     return(column);
 }
 
-Grid::getNumCol()
+int Grid::getNumCol()
 {
     return(row);
 }
 
-Grid::print(Grid g)
+void Grid::printg(Grid x)
 {
     for(int x = 0; x < column; x++)
     {
         for(int y = 0; y < row; y++)
         {
-            cout << g[x][y];
+            cout << myGrid[x][y];
         }
     cout << endl;
     }
