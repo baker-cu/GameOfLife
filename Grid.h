@@ -16,6 +16,8 @@ class Grid
         void kill(int x, int y);
         void grow(int x, int y);
         int getSize();
+        int getNumRows();
+        int getNumCol();
         string print(Grid x);
 
         char *myGrid;

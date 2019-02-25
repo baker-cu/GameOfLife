@@ -119,6 +119,16 @@ Grid::getSize()
     return(size);
 }
 
+Grid::getNumRows()
+{
+    return(column);
+}
+
+Grid::getNumCol()
+{
+    return(row);
+}
+
 Grid::print(Grid g)
 {
     for(int x = 0; x < column; x++)
