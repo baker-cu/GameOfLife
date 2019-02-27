@@ -52,6 +52,7 @@ Grid::Grid(int x, int y, double density)
         str += '-';
     }
 
+    //randomly generates indicies in the string str and puts them into the array
     for(int i1 = 0; i1 < column; i1++)
     {
         for(int i2 = 0; i2 < row; i2++)
@@ -111,6 +112,10 @@ void Grid::grow(int x, int y)
 
 bool Grid::check(int x, int y)
 {
+    if(y<0 || x<0)
+    {
+        return(false);
+    }
     return (myGrid[x][y] == 'X');
 }
 
