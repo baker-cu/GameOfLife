@@ -1,11 +1,14 @@
 #include <iostream>
+#include "Grid.h"
+#include "Grid.cpp"
 
 using namespace std;
 
 class Classic
 {
     public:
-        Classic();
+        Classic();//constructor
+        ~Classic();//destructor
 
         void run();
 

@@ -1,5 +1,6 @@
 #include <iostream>
 #include <Grid.h>
+#include "Grid.cpp"
 #include <Classic.h>
 
 
@@ -22,9 +23,8 @@ Classic::run()
         int y = 0;
 
         //iterate through each element
-
-        if (current_grid.check(x,y))
-        {//true means alive
+        if(x>0 && x<current_grid.getNumRows() && y>0 && y<current_grid.getNumCol())
+        {
             if (current_grid.check(x-1,y-1))
             {//up and to left
                 neighbors++;
