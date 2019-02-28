@@ -8,34 +8,42 @@
 
 using namespace std;
 
-Grid::Grid()
+Grid::Grid() //do i need a default constructor????
 {
-    char(*myGrid)[10];
-    myGrid = new char[10][10];
+    char myGrid[10][10];
     row = 10;
     column = 10;
     size = 100;
 }
 
-/*Grid::Grid(const Grid &g2)//copy constructor
+Grid::Grid(const Grid& g2)//copy constructor/////////////help
 {
     size = g2.size;
     row = g2.row;
     column = g2.column;
     num_living = g2.num_living;
 
-    for(int i1 = 0; i1 < column; i1++)
+    char** myGrid = new char*[row];
+    for(int i = 0; i < row; i++)
+        myGrid[i] = new char[column];
+
+    for(int i1 = 0; i1 < row; i1++)
     {
-        for(int i2 = 0; i2 < row; i2++)
+        for(int i2 = 0; i2 < column; i2++)
         {
             myGrid[i1][i2] = g2[i1][i2];
         }
     }
-}*/
+}
 
 Grid::Grid(int x, int y, double density)
 {
-    char* myGrid = new char[x*y];
+    //char* myGrid[x][y];// = new char[x][y];
+
+    char** myGrid = new char*[x];
+    for(int i = 0; i < x; i++)
+        myGrid[i] = new char[y];
+
     row = x;
     column = y;
     size = x*y;
@@ -68,34 +76,57 @@ Grid::Grid(int x, int y, double density)
 
 Grid::Grid(string file)
 {
-    string line = "";
-    string col, r;
-    //code to create a grid from a filepath
+    num_living = 0;
+    //code to create a 2d array from a filepath
     ifstream openfile(file);
 
-    getline(openfile, col);
-    int column = stoi(col);
-    getline(openfile, r);
-    int row = stoi(r);
-
-    size = row*column;
-
-    char* myGrid = new char[row*column];
-
-    int x = 0;
-    while(getline(openfile, line))
+    //error handling
+    if(! openfile)
     {
-        for(int y = 0; y < row; y++)
+        cout << "Error, file could not be opened" << endl;
+        exit(0);
+    }
+
+    openfile >> column;//gets number of columns
+    openfile >> row;//gets number of rows
+    size = row*column;
+    //char* myGrid[row][column];// = new char[row*column];
+
+    char** myGrid = new char*[row];
+    for(int i = 0; i < row; i++)
+        myGrid[i] = new char[column];
+
+    for(int x = 0; x<row; x++)
+    {
+        for(int y = 0; y<column; y++)
         {
-            myGrid[x][y] = line[x];
-            if(line == "X")
+            openfile >> myGrid[x][y];
+
+            if(! openfile)//error handling
             {
-                num_living += 1;
+                cout << "Error reading file at " << row << "," << column << endl;
+            }
+
+            if(myGrid[x][y] == 'X')
+            {
+                num_living++;
             }
         }
-        x++;
     }
+
     openfile.close();
+}
+
+Grid::~Grid()
+{
+    if(myGrid)
+    {
+        for(int i = 0; i < row; i++)
+        {
+            delete []myGrid[i];
+        }
+        delete []myGrid;
+    }
 }
 
 void Grid::kill(int x, int y)
@@ -137,6 +168,11 @@ int Grid::getNumRows()
 int Grid::getNumCol()
 {
     return(row);
+}
+
+int Grid::getNumLiving()
+{
+    return(num_living);
 }
 
 void Grid::printg(Grid x)
