@@ -13,6 +13,7 @@ class Classic
         void run();
 
         Grid current_grid;
+        Grid future_grid;
 };
 
 /* [0][0] [0][1] [1][2]

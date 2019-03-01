@@ -175,7 +175,7 @@ int Grid::getNumLiving()
     return(num_living);
 }
 
-void Grid::printg(Grid x)
+void Grid::printg()
 {
     for(int x = 0; x < column; x++)
     {
