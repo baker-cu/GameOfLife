@@ -1,9 +1,7 @@
 #include <iostream>
-#include <Grid.h>
-#include "Grid.cpp"
-#include <Classic.h>
-
-
+#include "Grid.h"
+//#include "Grid.cpp"
+#include "Classic.h"
 using namespace std;
 
 Classic::Classic(Grid g)
@@ -11,12 +9,12 @@ Classic::Classic(Grid g)
     current_grid = g;
 }
 
-Classic::run()
+void Classic::run()
 {
     int generation = 0;
     cout << "Generation: " << generation << endl;
     current_grid.printg();
-    //while true
+    while(true){
         //use copy constructor to get current_grid and next_grid
 
 
@@ -27,7 +25,7 @@ Classic::run()
         {
             for(int y = 0; y < current_grid.getNumCol(); y++)
             {
-                if(x>0 && y>0 && r < current_grid.getNumRows()-1 && x < current_grid.getNumCol()-1)//if the idex is not on the edges of the board
+                if(x>0 && y>0 && x < current_grid.getNumRows()-1 && y < current_grid.getNumCol()-1)//if the idex is not on the edges of the board
                 {
                     if (current_grid.check(x-1,y-1))
                     {//up and to left
@@ -37,7 +35,7 @@ Classic::run()
                     {//above
                         neighbors++;
                     }
-                    if (check (x+1,y+1))
+                    if (current_grid.check (x+1,y+1))
                     {//up and to right
                         neighbors++;
                     }
@@ -95,7 +93,7 @@ Classic::run()
                     {//above
                         neighbors++;
                     }
-                    if (check (x+1,y+1))
+                    if (current_grid.check (x+1,y+1))
                     {//up and to right
                         neighbors++;
                     }
@@ -114,7 +112,7 @@ Classic::run()
                     {//above
                         neighbors++;
                     }
-                    if (check (x+1,y+1))
+                    if (current_grid.check (x+1,y+1))
                     {//up and to right
                         neighbors++;
                     }
@@ -190,7 +188,7 @@ Classic::run()
                     {//above
                         neighbors++;
                     }
-                    if (check (x+1,y+1))
+                    if (current_grid.check (x+1,y+1))
                     {//up and to right
                         neighbors++;
                     }
@@ -215,14 +213,34 @@ Classic::run()
                     }
                 }
 
+                //code for if the cell grows or dies
+                //rules:
+                //if a cell has 1 or fewer neighbors...dies
+                //if a cell has 2 neighbors...stays same
+                //if a cell has 3 neighbors...grows
+                //if a cell has 4 or more neighbors...dies
+
+                if(neighbors <= 1)
+                {
+                    future_grid.kill(x,y);
+                }
+                if(neighbors == 3)
+                {
+                    future_grid.grow(x,y);
+                }
+                if(neighbors >= 4)
+                {
+                    future_grid.kill(x,y);
+                }
             }
         }
-        //code for if the cell grows or dies
 
 
 
-        //if next gen = current gen
-            //break
+        if (current_grid == future_grid)//if the grids stablize or there are 0 living the loop will break
+        {
+            break;
+        }
 
-
+    }
 }

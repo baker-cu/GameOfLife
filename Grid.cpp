@@ -1,5 +1,5 @@
 #include <iostream>
-#include <Grid.h>
+#include "Grid.h"
 #include <cmath>
 #include <fstream>
 #include <cstdlib>
@@ -131,14 +131,20 @@ Grid::~Grid()
 
 void Grid::kill(int x, int y)
 {
+    if(myGrid[x][y] == "X")
+    {
+        num_living--;
+    }
     myGrid[x][y] = '-';
-    num_living--;
 }
 
 void Grid::grow(int x, int y)
 {
+    if(myGrid[x][y] == "-")
+    {
+        num_living++;
+    }
     myGrid[x][y] = 'X';
-    num_living++;
 }
 
 bool Grid::check(int x, int y)
