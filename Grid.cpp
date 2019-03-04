@@ -31,6 +31,7 @@ Grid::Grid(const Grid& g2)//copy constructor/////////////help
     {
         for(int i2 = 0; i2 < column; i2++)
         {
+            //copy(&g2[i1][i2], &g2[i1][i2]+row*column,&myGrid[i1][i2]);
             myGrid[i1][i2] = g2[i1][i2];
         }
     }
@@ -131,7 +132,7 @@ Grid::~Grid()
 
 void Grid::kill(int x, int y)
 {
-    if(myGrid[x][y] == "X")
+    if(myGrid[x][y] == 'X')
     {
         num_living--;
     }
@@ -140,7 +141,7 @@ void Grid::kill(int x, int y)
 
 void Grid::grow(int x, int y)
 {
-    if(myGrid[x][y] == "-")
+    if(myGrid[x][y] == '-')
     {
         num_living++;
     }
@@ -159,6 +160,37 @@ bool Grid::check(int x, int y)
 bool Grid::isEmpty()
 {
     return (num_living == 0);
+}
+
+bool Grid::equals(const Grid& g2)
+{
+    if(size != g2.size) //checks if sizes are equal
+    {
+        return false;
+    }
+    if(row != g2.row)//checks if numRows are equal
+    {
+        return false;
+    }
+    if(column != g2.column)//checks if numCol are equal
+    {
+        return false;
+    }
+    if(num_living != g2.num_living)//checks if numliving are equal
+    {
+        return false;
+    }
+    for(int x = 0; x < row; x++)//checks each element
+    {
+        for(int y = 0; y < column; y++)
+        {
+            if(myGrid[x][y] != g2[x][y])
+            {
+                return false;
+            }
+        }
+    }
+    return true;
 }
 
 int Grid::getSize()

@@ -1,5 +1,5 @@
 #include <iostream>
-#include "Grid.h"
+//#include "Grid.h"
 #include "Grid.cpp"
 
 using namespace std;
@@ -7,7 +7,7 @@ using namespace std;
 class Classic
 {
     public:
-        Classic();//constructor
+        Classic(int x);//constructor
         ~Classic();//destructor
 
         void run();

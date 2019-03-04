@@ -2,7 +2,7 @@
 #include "Classic.h"
 using namespace std;
 
-Classic::Classic(int x)
+Doughnut::Doughnut(int x)
 {
     if(x==1)
     {
@@ -27,13 +27,13 @@ Classic::Classic(int x)
     }
 }
 
-Classic::~Classic()
+Doughnut::~Doughnut()
 {
     current_grid.~Grid();
     future_grid.~Grid();
 }
 
-void Classic::run()
+void Doughnut::run()
 {
     int generation = 0;
     cout << "Generation: " << generation << endl;
@@ -106,19 +106,6 @@ void Classic::run()
                     {//left
                         neighbors++;
                     }
-                    //Doughnut
-                    if(current_grid.check (current_grid.getNumRows()-1,y)//bottom of grid at current column
-                    {
-                        neighbors++;
-                    }
-                    if(current_grid.check (current_grid.getNumRows()-1,y-1)//bottom of grid at current column
-                    {
-                        neighbors++;
-                    }
-                    if(current_grid.check (current_grid.getNumRows()-1,y+1)//bottom of grid at current column
-                    {
-                        neighbors++;
-                    }
                 }
                 if(x==current_grid.getNumRows()-1 && y!=0 && y!=current_grid.getNumCol()-1)//index is on bottom of the board
                 {
@@ -140,19 +127,6 @@ void Classic::run()
                     }
                     if (current_grid.check (x-1,y))
                     {//left
-                        neighbors++;
-                    }
-                    //Doughnut
-                    if (current_grid.check (0,y))//top of grid at current column
-                    {
-                        neighbors++;
-                    }
-                    if (current_grid.check (0,y-1))//top of grid at current column
-                    {
-                        neighbors++;
-                    }
-                    if (current_grid.check (0,y+1))//top of grid at current column
-                    {
                         neighbors++;
                     }
                 }
@@ -178,19 +152,6 @@ void Classic::run()
                     {//below
                         neighbors++;
                     }
-                    //Doughnut
-                    if (current_grid.check (x,current_grid.getNumCol()-1))//far right of board at same row
-                    {
-                        neighbors++;
-                    }
-                    if (current_grid.check (x-1,current_grid.getNumCol()-1))//far right of board at same row
-                    {
-                        neighbors++;
-                    }
-                    if (current_grid.check (x+1,current_grid.getNumCol()-1))//far right of board at same row
-                    {
-                        neighbors++;
-                    }
                 }
                 if(y==current_grid.getNumCol()-1 && y!=0 && x!=current_grid.getNumRows()-1)//on right edge of board
                 {
@@ -214,18 +175,6 @@ void Classic::run()
                     {//left
                         neighbors++;
                     }
-                    if (current_grid.check (x,0))//left of board at same row
-                    {
-                        neighbors++;
-                    }
-                    if (current_grid.check (x-1,0))//left of board at same row
-                    {
-                        neighbors++;
-                    }
-                    if (current_grid.check (x+1,0))//left of board at same row
-                    {
-                        neighbors++;
-                    }
                 }
                 if(x==0 && y==0)//top left corner
                 {
@@ -239,18 +188,6 @@ void Classic::run()
                     }
                     if (current_grid.check (x,y-1))
                     {//below
-                        neighbors++;
-                    }
-                    if (current_grid.check (current_grid.getNumRows()-1,y))//bottom of grid at current column
-                    {
-                        neighbors++;
-                    }
-                    if (current_grid.check (x,current_grid.getNumCol()-1))//far right of board at same row
-                    {
-                        neighbors++;
-                    }
-                    if (current_grid.check (current_grid.getNumRows()-1,current_grid.getNumCol()-1))//bottom right corner
-                    {
                         neighbors++;
                     }
                 }
@@ -268,18 +205,6 @@ void Classic::run()
                     {//left
                         neighbors++;
                     }
-                    if (current_grid.check (current_grid.getNumRows()-1,y))//bottom of grid at current column
-                    {
-                        neighbors++;
-                    }
-                    if (current_grid.check (current_grid.getNumRows()-1,current_grid.getNumCol()-1))//bottom right corner
-                    {
-                        neighbors++;
-                    }
-                    if (current_grid.check (current_grid.getNumRows()-1,0)//bottom left corner
-                    {
-                        neighbors++;
-                    }
                 }
                 if(x==current_grid.getNumRows()-1 && y==0)//bottom left corner
                 {
@@ -293,18 +218,6 @@ void Classic::run()
                     }
                     if (current_grid.check (x+1,y))
                     {//to the right
-                        neighbors++;
-                    }
-                    if (current_grid.check (current_grid.getNumRows()-1,0))//bottom right
-                    {
-                        neighbors++;
-                    }
-                    if (current_grid.check (0,current_grid.getNumCol()-1))//top right
-                    {
-                        neighbors++;
-                    }
-                    if (current_grid.check (0,0))//top left
-                    {
                         neighbors++;
                     }
                 }
