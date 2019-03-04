@@ -15,7 +15,7 @@ void Classic::run()
     cout << "Generation: " << generation << endl;
     current_grid.printg();
     while(true){
-        //use copy constructor to get current_grid and next_grid
+        //use copy constructor to get current_grid and future_grid
 
 
         int neighbors = 0;
@@ -235,12 +235,21 @@ void Classic::run()
             }
         }
 
-
-
         if (current_grid == future_grid)//if the grids stablize or there are 0 living the loop will break
         {
             break;
         }
+
+        future_grid.printg(); //print after each new generation
+
+        //code for grid to output to a file
+        /*if(CODE FOR IF)
+        {
+            //CODE FOR OUTPUT TO FILE
+        }*/
+
+        cout << "Press Enter to Continue..." << endl;
+        cin.ignore();
 
     }
 }
