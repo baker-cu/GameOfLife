@@ -1,5 +1,11 @@
-#include <iostream>
 #include "Classic.h"
+
+#ifndef _CLASSIC_C
+#define _CLASSIC_C
+
+#include <iostream>
+#include <fstream>
+
 using namespace std;
 
 Classic::Classic(int x)
@@ -10,7 +16,10 @@ Classic::Classic(int x)
         cout<<"Enter the filepath for original grid: "<<endl;
         cin>>file;
 
-        current_grid = Grid(file);
+        Grid current_grid = Grid(file);
+        cout<<"Grid made"<<endl;
+        cout<<current_grid.get(0,0)<<endl;
+
     }
     if(x==2)
     {
@@ -24,7 +33,11 @@ Classic::Classic(int x)
         cin>>d;
 
         current_grid = Grid(r,c,d);
+
+
     }
+
+    cout<<"classic constuctor complete"<<endl;
 }
 
 Classic::~Classic()
@@ -37,9 +50,20 @@ void Classic::run()
 {
     int generation = 0;
     cout << "Generation: " << generation << endl;
-    current_grid.printg();
+
+    /*for(int x = 0; x < current_grid.getNumCol(); x++)
+    {
+        for(int y = 0; y < current_grid.getNumRows(); y++)
+        {
+            cout << current_grid[x][y];
+        }
+    cout << endl;
+}*/
+
     while(true){
+
         //use copy constructor to get current_grid and future_grid
+        Grid current_grid = Grid(future_grid);
 
 
         int neighbors = 0;
@@ -178,7 +202,7 @@ void Classic::run()
                     {//left
                         neighbors++;
                     }
-                    
+
                 }
                 if(x==0 && y==0)//top left corner
                 {
@@ -264,19 +288,36 @@ void Classic::run()
             }
         }
 
+        generation++;
+
+
+
+
         if (current_grid.equals(future_grid))//if the grids stablize or there are 0 living the loop will break
         {
             break;
         }
 
-        //code for grid to output to a file
-        /*if(CODE FOR IF)
+
+
+
+        cout << "Generation: " << generation << endl;
+        for(int x = 0; x < future_grid.getNumCol(); x++)
         {
-            //CODE FOR OUTPUT TO FILE
-        }*/
+            for(int y = 0; y < future_grid.getNumRows(); y++)
+            {
+                cout << future_grid.get(x,y);
+            }
+        cout << endl;
+        }
 
         cout << "Press Enter to Continue..." << endl;
         cin.ignore();
 
     }
+
+    current_grid.~Grid();
+    future_grid.~Grid();
 }
+
+#endif

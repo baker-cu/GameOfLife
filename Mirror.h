@@ -1,5 +1,11 @@
-#include <iostream>
 #include "Grid.cpp"
+
+#ifndef _MIRROR_H
+#define _MIRROR_H
+
+#include <iostream>
+
+
 
 using namespace std;
 
@@ -10,8 +16,10 @@ class Mirror
         ~Mirror();
 
         void run();
-
+    private:
         Grid current_grid;
         Grid future_grid;
 
-}
+};
+
+#endif

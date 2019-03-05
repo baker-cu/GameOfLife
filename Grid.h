@@ -1,3 +1,6 @@
+#ifndef _GRID_H
+#define _GRID_H
+
 #include <iostream>
 
 using namespace std;
@@ -20,7 +23,7 @@ class Grid
         int getNumRows();
         int getNumCol();
         int getNumLiving();
-        void printg();
+        void printg(int r, int c);
         char get(int x, int y) const;
 
     private:
@@ -32,3 +35,5 @@ class Grid
         char** myGrid;
 
 };
+
+#endif

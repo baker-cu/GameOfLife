@@ -1,5 +1,9 @@
-#include <iostream>
 #include "Grid.h"
+
+#ifndef _GRID_C
+#define _GRID_C
+
+#include <iostream>
 #include <cmath>
 #include <fstream>
 #include <cstdlib>
@@ -10,7 +14,7 @@ using namespace std;
 
 Grid::Grid() //do i need a default constructor????
 {
-    char myGrid[10][10];
+    char myGrid[10][10] = {{0,1,2,3}, {4,5,6,7}, {8,9,10,11}};
     row = 10;
     column = 10;
     size = 100;
@@ -39,7 +43,6 @@ Grid::Grid(const Grid& g2)//copy constructor/////////////help
 
 Grid::Grid(int x, int y, double density)
 {
-    //char* myGrid[x][y];// = new char[x][y];
 
     char** myGrid = new char*[x];
     for(int i = 0; i < x; i++)
@@ -60,19 +63,25 @@ Grid::Grid(int x, int y, double density)
     {
         str += '-';
     }
-
+    int randnum;
     //randomly generates indicies in the string str and puts them into the array
     for(int i1 = 0; i1 < column; i1++)
     {
         for(int i2 = 0; i2 < row; i2++)
         {
             //generate random numbers from index 0 to length of string - 1
-            int randnum = (rand()%(str.length()-1))+1;
+            if(str.length()>1)
+            {
+                randnum = (rand()%(str.length()-1))+1;
+            }
+            else
+            {
+                randnum = 0;
+            }
             myGrid[i1][i2] = str[randnum];
             str.erase(randnum);
         }
     }
-
 }
 
 Grid::Grid(string file)
@@ -88,18 +97,17 @@ Grid::Grid(string file)
         exit(0);
     }
 
-    openfile >> column;//gets number of columns
-    openfile >> row;//gets number of rows
+    openfile >> column;//gets number of rows
+    openfile >> row;//gets number of columns
     size = row*column;
-    //char* myGrid[row][column];// = new char[row*column];
 
     char** myGrid = new char*[row];
     for(int i = 0; i < row; i++)
         myGrid[i] = new char[column];
 
-    for(int x = 0; x<row; x++)
+    for(int x = 0; x<column; x++)
     {
-        for(int y = 0; y<column; y++)
+        for(int y = 0; y<row; y++)
         {
             openfile >> myGrid[x][y];
 
@@ -213,11 +221,11 @@ int Grid::getNumLiving()
     return(num_living);
 }
 
-void Grid::printg()
+void Grid::printg(int r, int c)
 {
-    for(int x = 0; x < column; x++)
+    for(int x = 0; x < r; x++)
     {
-        for(int y = 0; y < row; y++)
+        for(int y = 0; y < c; y++)
         {
             cout << myGrid[x][y];
         }
@@ -229,3 +237,5 @@ char Grid::get(int x, int y) const
 {
     return myGrid[x][y];
 }
+
+#endif

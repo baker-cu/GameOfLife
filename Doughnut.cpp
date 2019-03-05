@@ -1,5 +1,11 @@
+#include "Doughnut.h"
+
+#ifndef _DOUGHNUT_C
+#define _DOUGHNUT_C
+
 #include <iostream>
-#include "Classic.h"
+#include <fstream>
+
 using namespace std;
 
 Doughnut::Doughnut(int x)
@@ -37,10 +43,10 @@ void Doughnut::run()
 {
     int generation = 0;
     cout << "Generation: " << generation << endl;
-    current_grid.printg();
+    //current_grid.printg(current_grid.getNumRows(),current_grid.getNumCol(), current_grid);
     while(true){
         //use copy constructor to get current_grid and future_grid
-
+        Grid current_grid = Grid(future_grid);
 
         int neighbors = 0;
 
@@ -107,15 +113,15 @@ void Doughnut::run()
                         neighbors++;
                     }
                     //Doughnut
-                    if(current_grid.check (current_grid.getNumRows()-1,y)//bottom of grid at current column
+                    if(current_grid.check (current_grid.getNumRows()-1,y))//bottom of grid at current column
                     {
                         neighbors++;
                     }
-                    if(current_grid.check (current_grid.getNumRows()-1,y-1)//bottom of grid at current column
+                    if(current_grid.check (current_grid.getNumRows()-1,y-1))//bottom of grid at current column
                     {
                         neighbors++;
                     }
-                    if(current_grid.check (current_grid.getNumRows()-1,y+1)//bottom of grid at current column
+                    if(current_grid.check (current_grid.getNumRows()-1,y+1))//bottom of grid at current column
                     {
                         neighbors++;
                     }
@@ -255,6 +261,14 @@ void Doughnut::run()
                     {
                         neighbors++;
                     }
+                    if (current_grid.check (x+1,current_grid.getNumCol()-1))//below the top right
+                    {
+                        neighbors++;
+                    }
+                    if (current_grid.check (current_grid.getNumRows()-1,y+1))//to the right of the bottom left
+                    {
+                        neighbors++;
+                    }
                 }
                 if(x==0 && y==current_grid.getNumCol()-1)//top right corner
                 {
@@ -271,15 +285,23 @@ void Doughnut::run()
                         neighbors++;
                     }
                     //Doughnut
-                    if (current_grid.check (current_grid.getNumRows()-1,y))//bottom of grid at current column
-                    {
-                        neighbors++;
-                    }
                     if (current_grid.check (current_grid.getNumRows()-1,current_grid.getNumCol()-1))//bottom right corner
                     {
                         neighbors++;
                     }
-                    if (current_grid.check (current_grid.getNumRows()-1,0)//bottom left corner
+                    if (current_grid.check (current_grid.getNumRows()-1,0))//bottom left corner
+                    {
+                        neighbors++;
+                    }
+                    if (current_grid.check (0,0))//top left corner
+                    {
+                        neighbors++;
+                    }
+                    if (current_grid.check (1,0))//below the top left
+                    {
+                        neighbors++;
+                    }
+                    if (current_grid.check (current_grid.getNumRows()-1,current_grid.getNumCol()-2))
                     {
                         neighbors++;
                     }
@@ -310,7 +332,7 @@ void Doughnut::run()
                     {//top left
                         neighbors++;
                     }
-                    if (current_grid.check(current_grid.getNumRows()-2,current_grid.getNumCol()-1)))
+                    if (current_grid.check(current_grid.getNumRows()-2,current_grid.getNumCol()-1))
                     {//above bottom right
                         neighbors++;
                     }
@@ -341,7 +363,7 @@ void Doughnut::run()
                     {//bottom left
                         neighbors++;
                     }
-                    if (current_grid.check (0,y)
+                    if (current_grid.check (0,y))
                     {//top right
                         neighbors++;
                     }
@@ -388,8 +410,14 @@ void Doughnut::run()
             //CODE FOR OUTPUT TO FILE
         }*/
 
+        cout << "Generation: " << generation << endl;
+        //printg(future_grid.getNumRows(),future_grid.getNumCol(), future_grid);
+
         cout << "Press Enter to Continue..." << endl;
         cin.ignore();
 
     }
+
 }
+
+#endif
