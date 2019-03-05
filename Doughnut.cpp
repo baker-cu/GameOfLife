@@ -106,6 +106,19 @@ void Doughnut::run()
                     {//left
                         neighbors++;
                     }
+                    //Doughnut
+                    if(current_grid.check (current_grid.getNumRows()-1,y)//bottom of grid at current column
+                    {
+                        neighbors++;
+                    }
+                    if(current_grid.check (current_grid.getNumRows()-1,y-1)//bottom of grid at current column
+                    {
+                        neighbors++;
+                    }
+                    if(current_grid.check (current_grid.getNumRows()-1,y+1)//bottom of grid at current column
+                    {
+                        neighbors++;
+                    }
                 }
                 if(x==current_grid.getNumRows()-1 && y!=0 && y!=current_grid.getNumCol()-1)//index is on bottom of the board
                 {
@@ -127,6 +140,19 @@ void Doughnut::run()
                     }
                     if (current_grid.check (x-1,y))
                     {//left
+                        neighbors++;
+                    }
+                    //Doughnut
+                    if (current_grid.check (0,y))//top of grid at current column
+                    {
+                        neighbors++;
+                    }
+                    if (current_grid.check (0,y-1))//top of grid at current column
+                    {
+                        neighbors++;
+                    }
+                    if (current_grid.check (0,y+1))//top of grid at current column
+                    {
                         neighbors++;
                     }
                 }
@@ -152,6 +178,19 @@ void Doughnut::run()
                     {//below
                         neighbors++;
                     }
+                    //Doughnut
+                    if (current_grid.check (x,current_grid.getNumCol()-1))//far right of board at same row
+                    {
+                        neighbors++;
+                    }
+                    if (current_grid.check (x-1,current_grid.getNumCol()-1))//far right of board at same row
+                    {
+                        neighbors++;
+                    }
+                    if (current_grid.check (x+1,current_grid.getNumCol()-1))//far right of board at same row
+                    {
+                        neighbors++;
+                    }
                 }
                 if(y==current_grid.getNumCol()-1 && y!=0 && x!=current_grid.getNumRows()-1)//on right edge of board
                 {
@@ -175,6 +214,19 @@ void Doughnut::run()
                     {//left
                         neighbors++;
                     }
+                    //Doughnut
+                    if (current_grid.check (x,0))//left of board at same row
+                    {
+                        neighbors++;
+                    }
+                    if (current_grid.check (x-1,0))//left of board at same row
+                    {
+                        neighbors++;
+                    }
+                    if (current_grid.check (x+1,0))//left of board at same row
+                    {
+                        neighbors++;
+                    }
                 }
                 if(x==0 && y==0)//top left corner
                 {
@@ -188,6 +240,19 @@ void Doughnut::run()
                     }
                     if (current_grid.check (x,y-1))
                     {//below
+                        neighbors++;
+                    }
+                    //Doughnut
+                    if (current_grid.check (current_grid.getNumRows()-1,y))//bottom of grid at current column
+                    {
+                        neighbors++;
+                    }
+                    if (current_grid.check (x,current_grid.getNumCol()-1))//far right of board at same row
+                    {
+                        neighbors++;
+                    }
+                    if (current_grid.check (current_grid.getNumRows()-1,current_grid.getNumCol()-1))//bottom right corner
+                    {
                         neighbors++;
                     }
                 }
@@ -205,6 +270,19 @@ void Doughnut::run()
                     {//left
                         neighbors++;
                     }
+                    //Doughnut
+                    if (current_grid.check (current_grid.getNumRows()-1,y))//bottom of grid at current column
+                    {
+                        neighbors++;
+                    }
+                    if (current_grid.check (current_grid.getNumRows()-1,current_grid.getNumCol()-1))//bottom right corner
+                    {
+                        neighbors++;
+                    }
+                    if (current_grid.check (current_grid.getNumRows()-1,0)//bottom left corner
+                    {
+                        neighbors++;
+                    }
                 }
                 if(x==current_grid.getNumRows()-1 && y==0)//bottom left corner
                 {
@@ -220,6 +298,26 @@ void Doughnut::run()
                     {//to the right
                         neighbors++;
                     }
+                    if (current_grid.check (0,0))
+                    {//top right
+                        neighbors++;
+                    }
+                    if (current_grid.check(current_grid.getNumRows()-1,current_grid.getNumCol()-1))
+                    {//bottom right
+                        neighbors++;
+                    }
+                    if (current_grid.check(0,current_grid.getNumCol()-1))
+                    {//top left
+                        neighbors++;
+                    }
+                    if (current_grid.check(current_grid.getNumRows()-2,current_grid.getNumCol()-1)))
+                    {//above bottom right
+                        neighbors++;
+                    }
+                    if (current_grid.check(0,1))
+                    {//right of top left
+                        neighbors++;
+                    }
                 }
                 if(x==current_grid.getNumRows()-1 && y==current_grid.getNumCol()-1)//bottom right corner
                 {
@@ -233,6 +331,26 @@ void Doughnut::run()
                     }
                     if (current_grid.check (x-1,y))
                     {//left
+                        neighbors++;
+                    }
+                    if (current_grid.check (0,0))
+                    {//top left
+                        neighbors++;
+                    }
+                    if (current_grid.check (x,0))
+                    {//bottom left
+                        neighbors++;
+                    }
+                    if (current_grid.check (0,y)
+                    {//top right
+                        neighbors++;
+                    }
+                    if (current_grid.check (0,y-1))
+                    {
+                        neighbors++;
+                    }
+                    if (current_grid.check (x-1,0))
+                    {
                         neighbors++;
                     }
                 }

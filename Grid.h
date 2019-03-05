@@ -21,6 +21,7 @@ class Grid
         int getNumCol();
         int getNumLiving();
         void printg();
+        char get(int x, int y) const;
 
     private:
         int size; //number of cells in grid

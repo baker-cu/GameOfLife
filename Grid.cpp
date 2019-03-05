@@ -32,7 +32,7 @@ Grid::Grid(const Grid& g2)//copy constructor/////////////help
         for(int i2 = 0; i2 < column; i2++)
         {
             //copy(&g2[i1][i2], &g2[i1][i2]+row*column,&myGrid[i1][i2]);
-            myGrid[i1][i2] = g2[i1][i2];
+            myGrid[i1][i2] = g2.get(i1,i2);
         }
     }
 }
@@ -184,7 +184,7 @@ bool Grid::equals(const Grid& g2)
     {
         for(int y = 0; y < column; y++)
         {
-            if(myGrid[x][y] != g2[x][y])
+            if(myGrid[x][y] != g2.get(x,y))
             {
                 return false;
             }
@@ -223,4 +223,9 @@ void Grid::printg()
         }
     cout << endl;
     }
+}
+
+char Grid::get(int x, int y) const
+{
+    return myGrid[x][y];
 }
