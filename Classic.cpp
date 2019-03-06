@@ -115,7 +115,7 @@ void Classic::run()
                         neighbors++;
                     }
                 }
-                if(x==0 && y!=current_grid->getNumCol()-1 && y!=0)//if index is on the top of the board
+                else if(x==0 && y!=current_grid->getNumCol()-1 && y!=0)//if index is on the top of the board
                 {
                     if (current_grid->check (x+1,y))
                     {//to the right
@@ -139,7 +139,7 @@ void Classic::run()
                     }
 
                 }
-                if(x==current_grid->getNumRows()-1 && y!=0 && y!=current_grid->getNumCol()-1)//index is on bottom of the board
+                else if(x==current_grid->getNumRows()-1 && y!=0 && y!=current_grid->getNumCol()-1)//index is on bottom of the board
                 {
                     if (current_grid->check(x-1,y-1))
                     {//up and to left
@@ -163,7 +163,7 @@ void Classic::run()
                     }
 
                 }
-                if(y==0 && x!=0 && x!=current_grid->getNumRows()-1)//on left edge of board
+                else if(y==0 && x!=0 && x!=current_grid->getNumRows()-1)//on left edge of board
                 {
                     if (current_grid->check(x,y-1))
                     {//above
@@ -187,7 +187,7 @@ void Classic::run()
                     }
 
                 }
-                if(y==current_grid->getNumCol()-1 && y!=0 && x!=current_grid->getNumRows()-1)//on right edge of board
+                else if(y==current_grid->getNumCol()-1 && y!=0 && x!=current_grid->getNumRows()-1)//on right edge of board
                 {
                     if (current_grid->check(x-1,y-1))
                     {//up and to left
@@ -211,7 +211,7 @@ void Classic::run()
                     }
 
                 }
-                if(x==0 && y==0)//top left corner
+                else if(x==0 && y==0)//top left corner
                 {
                     if (current_grid->check (x+1,y))
                     {//to the right
@@ -226,7 +226,7 @@ void Classic::run()
                         neighbors++;
                     }
                 }
-                if(x==0 && y==current_grid->getNumCol()-1)//top right corner
+                else if(x==0 && y==current_grid->getNumCol()-1)//top right corner
                 {
                     if (current_grid->check (x,y-1))
                     {//below
@@ -241,7 +241,7 @@ void Classic::run()
                         neighbors++;
                     }
                 }
-                if(x==current_grid->getNumRows()-1 && y==0)//bottom left corner
+                else if(x==current_grid->getNumRows()-1 && y==0)//bottom left corner
                 {
                     if (current_grid->check(x,y-1))
                     {//above
@@ -257,7 +257,7 @@ void Classic::run()
                     }
 
                 }
-                if(x==current_grid->getNumRows()-1 && y==current_grid->getNumCol()-1)//bottom right corner
+                else if(x==current_grid->getNumRows()-1 && y==current_grid->getNumCol()-1)//bottom right corner
                 {
                     if (current_grid->check(x-1,y-1))
                     {//up and to left
@@ -272,6 +272,7 @@ void Classic::run()
                         neighbors++;
                     }
                 }
+                cout<< neighbors << " :Neighbors" << endl;
 
                 //code for if the cell grows or dies
                 //rules:
@@ -284,14 +285,15 @@ void Classic::run()
                 {
                     future_grid->kill(x,y);
                 }
-                if(neighbors == 3)
+                else if(neighbors == 3)
                 {
                     future_grid->grow(x,y);
                 }
-                if(neighbors >= 4)
+                else if(neighbors >= 4)
                 {
                     future_grid->kill(x,y);
                 }
+                neighbors = 0;
 
             }
         }

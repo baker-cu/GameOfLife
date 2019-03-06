@@ -419,6 +419,7 @@ void Mirror::run()
                 {
                     future_grid->kill(x,y);
                 }
+                neighbors = 0;
             }
         }
 

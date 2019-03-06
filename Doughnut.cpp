@@ -415,6 +415,7 @@ void Doughnut::run()
                 {
                     future_grid->kill(x,y);
                 }
+                neighbors = 0;
             }
         }
 
@@ -444,7 +445,7 @@ void Doughnut::run()
             cout << "Press Enter to Continue..." << endl;
             cin.ignore();
         }
-        
+
         if(tofile == "y")
             current_grid->toFile(filename, generation);
 
