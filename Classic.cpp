@@ -272,7 +272,6 @@ void Classic::run()
                         neighbors++;
                     }
                 }
-                cout<< neighbors << " :Neighbors" << endl;
 
                 //code for if the cell grows or dies
                 //rules:
