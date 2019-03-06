@@ -16,8 +16,8 @@ class Doughnut
 
         void run();
     private:
-        Grid current_grid;
-        Grid future_grid;
+        Grid* current_grid;
+        Grid* future_grid;
 
 };
 

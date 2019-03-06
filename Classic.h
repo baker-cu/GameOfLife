@@ -16,8 +16,8 @@ class Classic
 
         void run();
     private:
-        Grid current_grid;
-        Grid future_grid;
+        Grid* current_grid;
+        Grid* future_grid;
 };
 
 #endif

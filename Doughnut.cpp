@@ -16,7 +16,10 @@ Doughnut::Doughnut(int x)
         cout<<"Enter the filepath for original grid: "<<endl;
         cin>>file;
 
-        current_grid = Grid(file);
+        this->current_grid = new Grid(file);
+        this->future_grid = new Grid(file);
+
+
     }
     if(x==2)
     {
@@ -29,349 +32,365 @@ Doughnut::Doughnut(int x)
         cout<<"Enter the population density: "<<endl;
         cin>>d;
 
-        current_grid = Grid(r,c,d);
+        this->current_grid = new Grid(r,c,d);
+        this->future_grid = new Grid(r,c,d);
     }
 }
 
 Doughnut::~Doughnut()
 {
-    current_grid.~Grid();
-    future_grid.~Grid();
+    delete this->current_grid;
+    delete this->future_grid;
 }
 
 void Doughnut::run()
 {
+    string enter;
+    cout<<"Would you like to have to press after every generation? (y/n)"<<endl;
+    cin>>enter;
+
+    string tofile;
+    cout<<"Would you like to print each generation to a file? (y/n)"<<endl;
+    cin>>tofile;
+
     int generation = 0;
     cout << "Generation: " << generation << endl;
-    //current_grid.printg(current_grid.getNumRows(),current_grid.getNumCol(), current_grid);
+
+    current_grid->printg();
+
+    string filename = "";
+    if (tofile == "y")
+    {
+        cout<<"Enter the name of your file you would like to print to: "<<endl;
+        cin>>filename;
+    }
+
     while(true){
-        //use copy constructor to get current_grid and future_grid
-        Grid current_grid = Grid(future_grid);
 
         int neighbors = 0;
 
         //iterate through each element
-        for(int x = 0; x < current_grid.getNumRows(); x++)
+        for(int x = 0; x < current_grid->getNumRows()-1; x++)
         {
-            for(int y = 0; y < current_grid.getNumCol(); y++)
+            for(int y = 0; y < current_grid->getNumCol()-1; y++)
             {
-                if(x>0 && y>0 && x < current_grid.getNumRows()-1 && y < current_grid.getNumCol()-1)//if the idex is not on the edges of the board
+                if(x>0 && y>0 && x < current_grid->getNumRows()-1 && y < current_grid->getNumCol()-1)//if the idex is not on the edges of the board
                 {
-                    if (current_grid.check(x-1,y-1))
+                    if (current_grid->check(x-1,y-1))
                     {//up and to left
                         neighbors++;
                     }
-                    if (current_grid.check(x,y-1))
+                    if (current_grid->check(x,y-1))
                     {//above
                         neighbors++;
                     }
-                    if (current_grid.check (x+1,y+1))
+                    if (current_grid->check (x+1,y+1))
                     {//up and to right
                         neighbors++;
                     }
-                    if (current_grid.check (x+1,y))
+                    if (current_grid->check (x+1,y))
                     {//to the right
                         neighbors++;
                     }
-                    if (current_grid.check (x+1,y-1))
+                    if (current_grid->check (x+1,y-1))
                     {//below and right
                         neighbors++;
                     }
-                    if (current_grid.check (x,y-1))
+                    if (current_grid->check (x,y-1))
                     {//below
                         neighbors++;
                     }
-                    if (current_grid.check (x-1,y-1))
+                    if (current_grid->check (x-1,y-1))
                     {//below and left
                         neighbors++;
                     }
-                    if (current_grid.check (x-1,y))
+                    if (current_grid->check (x-1,y))
                     {//left
                         neighbors++;
                     }
                 }
-                if(x==0 && y!=current_grid.getNumCol()-1 && y!=0)//if index is on the top of the board
+                if(x==0 && y!=current_grid->getNumCol()-1 && y!=0)//if index is on the top of the board
                 {
-                    if (current_grid.check (x+1,y))
+                    if (current_grid->check (x+1,y))
                     {//to the right
                         neighbors++;
                     }
-                    if (current_grid.check (x+1,y-1))
+                    if (current_grid->check (x+1,y-1))
                     {//below and right
                         neighbors++;
                     }
-                    if (current_grid.check (x,y-1))
+                    if (current_grid->check (x,y-1))
                     {//below
                         neighbors++;
                     }
-                    if (current_grid.check (x-1,y-1))
+                    if (current_grid->check (x-1,y-1))
                     {//below and left
                         neighbors++;
                     }
-                    if (current_grid.check (x-1,y))
+                    if (current_grid->check (x-1,y))
                     {//left
                         neighbors++;
                     }
                     //Doughnut
-                    if(current_grid.check (current_grid.getNumRows()-1,y))//bottom of grid at current column
+                    if(current_grid->check (current_grid->getNumRows()-1,y))//bottom of grid at current column
                     {
                         neighbors++;
                     }
-                    if(current_grid.check (current_grid.getNumRows()-1,y-1))//bottom of grid at current column
+                    if(current_grid->check (current_grid->getNumRows()-1,y-1))//bottom of grid at current column
                     {
                         neighbors++;
                     }
-                    if(current_grid.check (current_grid.getNumRows()-1,y+1))//bottom of grid at current column
+                    if(current_grid->check (current_grid->getNumRows()-1,y+1))//bottom of grid at current column
                     {
                         neighbors++;
                     }
                 }
-                if(x==current_grid.getNumRows()-1 && y!=0 && y!=current_grid.getNumCol()-1)//index is on bottom of the board
+                if(x==current_grid->getNumRows()-1 && y!=0 && y!=current_grid->getNumCol()-1)//index is on bottom of the board
                 {
-                    if (current_grid.check(x-1,y-1))
+                    if (current_grid->check(x-1,y-1))
                     {//up and to left
                         neighbors++;
                     }
-                    if (current_grid.check(x,y-1))
+                    if (current_grid->check(x,y-1))
                     {//above
                         neighbors++;
                     }
-                    if (current_grid.check (x+1,y+1))
+                    if (current_grid->check (x+1,y+1))
                     {//up and to right
                         neighbors++;
                     }
-                    if (current_grid.check (x+1,y))
+                    if (current_grid->check (x+1,y))
                     {//to the right
                         neighbors++;
                     }
-                    if (current_grid.check (x-1,y))
+                    if (current_grid->check (x-1,y))
                     {//left
                         neighbors++;
                     }
                     //Doughnut
-                    if (current_grid.check (0,y))//top of grid at current column
+                    if (current_grid->check (0,y))//top of grid at current column
                     {
                         neighbors++;
                     }
-                    if (current_grid.check (0,y-1))//top of grid at current column
+                    if (current_grid->check (0,y-1))//top of grid at current column
                     {
                         neighbors++;
                     }
-                    if (current_grid.check (0,y+1))//top of grid at current column
+                    if (current_grid->check (0,y+1))//top of grid at current column
                     {
                         neighbors++;
                     }
                 }
-                if(y==0 && x!=0 && x!=current_grid.getNumRows()-1)//on left edge of board
+                if(y==0 && x!=0 && x!=current_grid->getNumRows()-1)//on left edge of board
                 {
-                    if (current_grid.check(x,y-1))
+                    if (current_grid->check(x,y-1))
                     {//above
                         neighbors++;
                     }
-                    if (current_grid.check (x+1,y+1))
+                    if (current_grid->check (x+1,y+1))
                     {//up and to right
                         neighbors++;
                     }
-                    if (current_grid.check (x+1,y))
+                    if (current_grid->check (x+1,y))
                     {//to the right
                         neighbors++;
                     }
-                    if (current_grid.check (x+1,y-1))
+                    if (current_grid->check (x+1,y-1))
                     {//below and right
                         neighbors++;
                     }
-                    if (current_grid.check (x,y-1))
+                    if (current_grid->check (x,y-1))
                     {//below
                         neighbors++;
                     }
                     //Doughnut
-                    if (current_grid.check (x,current_grid.getNumCol()-1))//far right of board at same row
+                    if (current_grid->check (x,current_grid->getNumCol()-1))//far right of board at same row
                     {
                         neighbors++;
                     }
-                    if (current_grid.check (x-1,current_grid.getNumCol()-1))//far right of board at same row
+                    if (current_grid->check (x-1,current_grid->getNumCol()-1))//far right of board at same row
                     {
                         neighbors++;
                     }
-                    if (current_grid.check (x+1,current_grid.getNumCol()-1))//far right of board at same row
+                    if (current_grid->check (x+1,current_grid->getNumCol()-1))//far right of board at same row
                     {
                         neighbors++;
                     }
                 }
-                if(y==current_grid.getNumCol()-1 && y!=0 && x!=current_grid.getNumRows()-1)//on right edge of board
+                if(y==current_grid->getNumCol()-1 && y!=0 && x!=current_grid->getNumRows()-1)//on right edge of board
                 {
-                    if (current_grid.check(x-1,y-1))
+                    if (current_grid->check(x-1,y-1))
                     {//up and to left
                         neighbors++;
                     }
-                    if (current_grid.check(x,y-1))
+                    if (current_grid->check(x,y-1))
                     {//above
                         neighbors++;
                     }
-                    if (current_grid.check (x,y-1))
+                    if (current_grid->check (x,y-1))
                     {//below
                         neighbors++;
                     }
-                    if (current_grid.check (x-1,y-1))
+                    if (current_grid->check (x-1,y-1))
                     {//below and left
                         neighbors++;
                     }
-                    if (current_grid.check (x-1,y))
+                    if (current_grid->check (x-1,y))
                     {//left
                         neighbors++;
                     }
                     //Doughnut
-                    if (current_grid.check (x,0))//left of board at same row
+                    if (current_grid->check (x,0))//left of board at same row
                     {
                         neighbors++;
                     }
-                    if (current_grid.check (x-1,0))//left of board at same row
+                    if (current_grid->check (x-1,0))//left of board at same row
                     {
                         neighbors++;
                     }
-                    if (current_grid.check (x+1,0))//left of board at same row
+                    if (current_grid->check (x+1,0))//left of board at same row
                     {
                         neighbors++;
                     }
                 }
                 if(x==0 && y==0)//top left corner
                 {
-                    if (current_grid.check (x+1,y))
+                    if (current_grid->check (x+1,y))
                     {//to the right
                         neighbors++;
                     }
-                    if (current_grid.check (x+1,y-1))
+                    if (current_grid->check (x+1,y-1))
                     {//below and right
                         neighbors++;
                     }
-                    if (current_grid.check (x,y-1))
+                    if (current_grid->check (x,y-1))
                     {//below
                         neighbors++;
                     }
                     //Doughnut
-                    if (current_grid.check (current_grid.getNumRows()-1,y))//bottom of grid at current column
+                    if (current_grid->check (current_grid->getNumRows()-1,y))//bottom of grid at current column
                     {
                         neighbors++;
                     }
-                    if (current_grid.check (x,current_grid.getNumCol()-1))//far right of board at same row
+                    if (current_grid->check (x,current_grid->getNumCol()-1))//far right of board at same row
                     {
                         neighbors++;
                     }
-                    if (current_grid.check (current_grid.getNumRows()-1,current_grid.getNumCol()-1))//bottom right corner
+                    if (current_grid->check (current_grid->getNumRows()-1,current_grid->getNumCol()-1))//bottom right corner
                     {
                         neighbors++;
                     }
-                    if (current_grid.check (x+1,current_grid.getNumCol()-1))//below the top right
+                    if (current_grid->check (x+1,current_grid->getNumCol()-1))//below the top right
                     {
                         neighbors++;
                     }
-                    if (current_grid.check (current_grid.getNumRows()-1,y+1))//to the right of the bottom left
+                    if (current_grid->check (current_grid->getNumRows()-1,y+1))//to the right of the bottom left
                     {
                         neighbors++;
                     }
                 }
-                if(x==0 && y==current_grid.getNumCol()-1)//top right corner
+                if(x==0 && y==current_grid->getNumCol()-1)//top right corner
                 {
-                    if (current_grid.check (x,y-1))
+                    if (current_grid->check (x,y-1))
                     {//below
                         neighbors++;
                     }
-                    if (current_grid.check (x-1,y-1))
+                    if (current_grid->check (x-1,y-1))
                     {//below and left
                         neighbors++;
                     }
-                    if (current_grid.check (x-1,y))
+                    if (current_grid->check (x-1,y))
                     {//left
                         neighbors++;
                     }
                     //Doughnut
-                    if (current_grid.check (current_grid.getNumRows()-1,current_grid.getNumCol()-1))//bottom right corner
+                    if (current_grid->check (current_grid->getNumRows()-1,current_grid->getNumCol()-1))//bottom right corner
                     {
                         neighbors++;
                     }
-                    if (current_grid.check (current_grid.getNumRows()-1,0))//bottom left corner
+                    if (current_grid->check (current_grid->getNumRows()-1,0))//bottom left corner
                     {
                         neighbors++;
                     }
-                    if (current_grid.check (0,0))//top left corner
+                    if (current_grid->check (0,0))//top left corner
                     {
                         neighbors++;
                     }
-                    if (current_grid.check (1,0))//below the top left
+                    if (current_grid->check (1,0))//below the top left
                     {
                         neighbors++;
                     }
-                    if (current_grid.check (current_grid.getNumRows()-1,current_grid.getNumCol()-2))
+                    if (current_grid->check (current_grid->getNumRows()-1,current_grid->getNumCol()-2))
                     {
                         neighbors++;
                     }
                 }
-                if(x==current_grid.getNumRows()-1 && y==0)//bottom left corner
+                if(x==current_grid->getNumRows()-1 && y==0)//bottom left corner
                 {
-                    if (current_grid.check(x,y-1))
+                    if (current_grid->check(x,y-1))
                     {//above
                         neighbors++;
                     }
-                    if (current_grid.check (x+1,y+1))
+                    if (current_grid->check (x+1,y+1))
                     {//up and to right
                         neighbors++;
                     }
-                    if (current_grid.check (x+1,y))
+                    if (current_grid->check (x+1,y))
                     {//to the right
                         neighbors++;
                     }
-                    if (current_grid.check (0,0))
+                    if (current_grid->check (0,0))
                     {//top right
                         neighbors++;
                     }
-                    if (current_grid.check(current_grid.getNumRows()-1,current_grid.getNumCol()-1))
+                    if (current_grid->check(current_grid->getNumRows()-1,current_grid->getNumCol()-1))
                     {//bottom right
                         neighbors++;
                     }
-                    if (current_grid.check(0,current_grid.getNumCol()-1))
+                    if (current_grid->check(0,current_grid->getNumCol()-1))
                     {//top left
                         neighbors++;
                     }
-                    if (current_grid.check(current_grid.getNumRows()-2,current_grid.getNumCol()-1))
+                    if (current_grid->check(current_grid->getNumRows()-2,current_grid->getNumCol()-1))
                     {//above bottom right
                         neighbors++;
                     }
-                    if (current_grid.check(0,1))
+                    if (current_grid->check(0,1))
                     {//right of top left
                         neighbors++;
                     }
                 }
-                if(x==current_grid.getNumRows()-1 && y==current_grid.getNumCol()-1)//bottom right corner
+                if(x==current_grid->getNumRows()-1 && y==current_grid->getNumCol()-1)//bottom right corner
                 {
-                    if (current_grid.check(x-1,y-1))
+                    if (current_grid->check(x-1,y-1))
                     {//up and to left
                         neighbors++;
                     }
-                    if (current_grid.check(x,y-1))
+                    if (current_grid->check(x,y-1))
                     {//above
                         neighbors++;
                     }
-                    if (current_grid.check (x-1,y))
+                    if (current_grid->check (x-1,y))
                     {//left
                         neighbors++;
                     }
-                    if (current_grid.check (0,0))
+                    if (current_grid->check (0,0))
                     {//top left
                         neighbors++;
                     }
-                    if (current_grid.check (x,0))
+                    if (current_grid->check (x,0))
                     {//bottom left
                         neighbors++;
                     }
-                    if (current_grid.check (0,y))
+                    if (current_grid->check (0,y))
                     {//top right
                         neighbors++;
                     }
-                    if (current_grid.check (0,y-1))
+                    if (current_grid->check (0,y-1))
                     {
                         neighbors++;
                     }
-                    if (current_grid.check (x-1,0))
+                    if (current_grid->check (x-1,0))
                     {
                         neighbors++;
                     }
@@ -386,38 +405,52 @@ void Doughnut::run()
 
                 if(neighbors <= 1)
                 {
-                    future_grid.kill(x,y);
+                    future_grid->kill(x,y);
                 }
                 if(neighbors == 3)
                 {
-                    future_grid.grow(x,y);
+                    future_grid->grow(x,y);
                 }
                 if(neighbors >= 4)
                 {
-                    future_grid.kill(x,y);
+                    future_grid->kill(x,y);
                 }
             }
         }
 
-        if (current_grid.equals(future_grid))//if the grids stablize or there are 0 living the loop will break
+        if (current_grid->equals(future_grid))//if the grids stablize or there are 0 living the loop will break
         {
             break;
         }
 
-        //code for grid to output to a file
-        /*if(CODE FOR IF)
+        generation++;
+
+
+
+
+        if (current_grid->equals(future_grid))//if the grids stablize or there are 0 living the loop will break
         {
-            //CODE FOR OUTPUT TO FILE
-        }*/
+            break;
+        }
+
+
+
 
         cout << "Generation: " << generation << endl;
-        //printg(future_grid.getNumRows(),future_grid.getNumCol(), future_grid);
+        future_grid->printg();
 
-        cout << "Press Enter to Continue..." << endl;
-        cin.ignore();
+        if(enter == "yes")
+        {
+            cout << "Press Enter to Continue..." << endl;
+            cin.ignore();
+        }
+        
+        if(tofile == "y")
+            current_grid->toFile(filename, generation);
+
+        this->current_grid = new Grid(future_grid);
 
     }
-
 }
 
 #endif

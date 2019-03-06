@@ -3,8 +3,8 @@
 #include "Mirror.cpp"
 #include "Grid.cpp"
 
-#ifndef _MAIN_C
-#define _MAIN_C
+//#ifndef _MAIN_C
+//#define _MAIN_C
 
 #include <iostream>
 
@@ -13,8 +13,6 @@ using namespace std;
 
 int main()
 {
-    Grid x = Grid();
-    x.printg(x.getNumRows(), x.getNumCol());
     while(true)
     {
         while(true)
@@ -79,4 +77,4 @@ int main()
     return 0;
 }
 
-#endif
+//#endif

@@ -20,14 +20,14 @@ Grid::Grid() //do i need a default constructor????
     size = 100;
 }
 
-Grid::Grid(const Grid& g2)//copy constructor/////////////help
+Grid::Grid(Grid* g2)//copy constructor/////////////help
 {
-    size = g2.size;
-    row = g2.row;
-    column = g2.column;
-    num_living = g2.num_living;
+    size = g2->size;
+    row = g2->row;
+    column = g2->column;
+    num_living = g2->num_living;
 
-    char** myGrid = new char*[row];
+    myGrid = new char*[row];
     for(int i = 0; i < row; i++)
         myGrid[i] = new char[column];
 
@@ -35,16 +35,14 @@ Grid::Grid(const Grid& g2)//copy constructor/////////////help
     {
         for(int i2 = 0; i2 < column; i2++)
         {
-            //copy(&g2[i1][i2], &g2[i1][i2]+row*column,&myGrid[i1][i2]);
-            myGrid[i1][i2] = g2.get(i1,i2);
+            myGrid[i1][i2] = g2->get(i1,i2);
         }
     }
 }
 
 Grid::Grid(int x, int y, double density)
 {
-
-    char** myGrid = new char*[x];
+    myGrid = new char*[x];
     for(int i = 0; i < x; i++)
         myGrid[i] = new char[y];
 
@@ -54,16 +52,19 @@ Grid::Grid(int x, int y, double density)
     num_living = size * density;
     string str = "";
 
+
     for(int a = 0; a < num_living; a++)//adds the density of X's to a string
     {
         str += 'X';
     }
+
 
     for(int a = 0; a < size - num_living; a++)//adds the rest to the string
     {
         str += '-';
     }
     int randnum;
+
     //randomly generates indicies in the string str and puts them into the array
     for(int i1 = 0; i1 < column; i1++)
     {
@@ -79,7 +80,7 @@ Grid::Grid(int x, int y, double density)
                 randnum = 0;
             }
             myGrid[i1][i2] = str[randnum];
-            str.erase(randnum);
+            str.erase(randnum,1);
         }
     }
 }
@@ -101,7 +102,7 @@ Grid::Grid(string file)
     openfile >> row;//gets number of columns
     size = row*column;
 
-    char** myGrid = new char*[row];
+    myGrid = new char*[row];
     for(int i = 0; i < row; i++)
         myGrid[i] = new char[column];
 
@@ -170,21 +171,21 @@ bool Grid::isEmpty()
     return (num_living == 0);
 }
 
-bool Grid::equals(const Grid& g2)
+bool Grid::equals(Grid* g2)
 {
-    if(size != g2.size) //checks if sizes are equal
+    if(size != g2->size) //checks if sizes are equal
     {
         return false;
     }
-    if(row != g2.row)//checks if numRows are equal
+    if(row != g2->row)//checks if numRows are equal
     {
         return false;
     }
-    if(column != g2.column)//checks if numCol are equal
+    if(column != g2->column)//checks if numCol are equal
     {
         return false;
     }
-    if(num_living != g2.num_living)//checks if numliving are equal
+    if(num_living != g2->num_living)//checks if numliving are equal
     {
         return false;
     }
@@ -192,7 +193,7 @@ bool Grid::equals(const Grid& g2)
     {
         for(int y = 0; y < column; y++)
         {
-            if(myGrid[x][y] != g2.get(x,y))
+            if(myGrid[x][y] != g2->get(x,y))
             {
                 return false;
             }
@@ -221,11 +222,11 @@ int Grid::getNumLiving()
     return(num_living);
 }
 
-void Grid::printg(int r, int c)
+void Grid::printg()
 {
-    for(int x = 0; x < r; x++)
+    for(int x = 0; x < column; x++)
     {
-        for(int y = 0; y < c; y++)
+        for(int y = 0; y < row; y++)
         {
             cout << myGrid[x][y];
         }
@@ -236,6 +237,24 @@ void Grid::printg(int r, int c)
 char Grid::get(int x, int y) const
 {
     return myGrid[x][y];
+}
+
+void Grid::toFile(string fname, int gen)
+{
+    ofstream outputFile(fname);
+    outputFile << gen<< endl;
+    for(int x = 0; x < column; x++)
+    {
+        for(int y = 0; y < row; y++)
+        {
+            outputFile << myGrid[x][y];
+        }
+    outputFile << endl;
+    }
+    outputFile << endl;
+
+    outputFile.close();
+
 }
 
 #endif
